@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.Query;
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -11,6 +12,16 @@ import org.hibernate.cfg.Configuration;
 
 public class Hibernatemain {
 
+	public static void insertSql(SessionFactory sf){
+		Session s = sf.openSession();
+		String sqlquery = "INSERT INTO PRODUCT_MASTER(P_ID,NAME,COST) VALUES(12,'MICROMAX',15000)";
+		Transaction t = s.beginTransaction();
+		SQLQuery squery = s.createSQLQuery(sqlquery);
+		squery.executeUpdate();
+		t.commit();
+		s.close();
+	}
+	
 	public static void main(String[] args) throws Exception{
 		// TODO Auto-generated method stub
 		Configuration config = new Configuration();
@@ -28,6 +39,8 @@ public class Hibernatemain {
 		s1.close();
 		
 		
+		//insertSql(sf);
+		
 		//read all products
 		Session s2 = sf.openSession();
 		Query query = s2.createQuery("from Product");
@@ -38,13 +51,14 @@ public class Hibernatemain {
 		s2.close();
 		
 		//update a product
-		Session s3 = sf.openSession();
+		/*Session s3 = sf.openSession();
 		Transaction t1 = s3.beginTransaction();
-		Product product_to_update = s3.load(Product.class,15l);
+		Product product_to_update = s3.load(Product.class,16l);
 		product_to_update.setName("Samsung");
 		t1.commit();
 		s3.flush();
 		s3.close();
+		*/
 		
 		//read all products
 		Session s4 = sf.openSession();
@@ -57,10 +71,10 @@ public class Hibernatemain {
 
 		
 		//delete all products
-		Session s5 = sf.openSession();
+		/*Session s5 = sf.openSession();
 		Query delete_query = s5.createQuery("delete from Product where id = "+15l);
 		int updates = delete_query.executeUpdate();
-		System.out.println("Number of updates: "+updates);
+		System.out.println("Number of updates: "+updates);*/
 				
 		sf.close();
 	}

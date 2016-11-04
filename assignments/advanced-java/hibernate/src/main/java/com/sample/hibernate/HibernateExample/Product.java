@@ -7,6 +7,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 
@@ -20,7 +21,8 @@ import javax.persistence.Table;
 public class Product {
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.SEQUENCE , generator="my-seq")
+	@SequenceGenerator(name="my-seq",sequenceName="db_seq",allocationSize=1)
 	@Column(name="p_id")
 	private Long id;
 	
